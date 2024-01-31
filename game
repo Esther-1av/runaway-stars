@@ -1,0 +1,316 @@
+import json
+import random
+
+name = str(input("What is your name:"))
+print("")
+print("hello", name)
+print("")
+def update_leaderboard(score):
+  leaderboard = []
+  try:
+      with open('leaderboard.json', 'r') as file:
+          leaderboard = json.load(file)
+  except FileNotFoundError:
+      pass
+  leaderboard.append(score)
+  leaderboard.sort(reverse=True)  
+  with open('leaderboard.json', 'w') as file:
+      json.dump(leaderboard, file)
+def display_leaderboard():
+  try:
+      with open('leaderboard.json', 'r') as file:
+          leaderboard = json.load(file)
+      print("Top scores:")
+      for i, score in enumerate(leaderboard[:20]):
+          print(f"{i+1}. {score} meters")
+  except FileNotFoundError:
+      print("No scores found in the leaderboard.")
+print("WELCOME TO RUNAWAY STARS")
+print("You have just stolen a spaceship from a group of aliens")
+print("The aliens are chasing after you and you have to escape")
+print("Outrun the aliens and survive")
+done = True
+print("")
+miles_traveled = 0
+water_drank = 0
+energy = 100
+aliens_distance = -20
+water_left = 5
+thirst = 0
+turn = 0
+temperature = 65
+w = "Drink Water"
+S = "speed up"
+L = "LUDICROUS SPEED"
+R = "Rest"
+C = "Check User Status"
+Q = "quit"
+y = "Yes"
+n = "No"
+v = "view leaderboard"
+g = "gather water"
+f = "cool down"
+h = "heat up"
+i = "show controls"
+print("W. drink water")
+print("S. speed up")
+print("L. LUDICROUS SPEED")
+print("R. rest")
+print("C. check user status")
+print("Q. quit")
+print("V. view leaderboard")
+print("G. gather water")
+print("F. cool down")
+print("H. heat up")
+print("I. show control")
+print("")
+has_printed = False
+while done:
+  if temperature > 85:
+    print("it is gettin hot in here")
+  if temperature < 40:
+    print ("brrrr its cold")
+  if temperature > 100:
+    print("GAME OVER")
+    print("you passed out")
+    print("")
+    done = False
+  if temperature < 30:
+    print ("GAME OVER")
+    print ("you froze")
+    done = False
+  if energy < 0:
+    energy = 0
+  if water_left <2:
+    print("you are running low on water")
+  if energy < 50:
+    print("your getting very sleepy")
+  if aliens_distance > -20:
+    print("their getting closer")
+    print("👽")
+  if thirst < 0:
+    thirst = 0
+  if energy < 1:
+    print("GAME OVER")
+    print("you got to tired, they got you")
+    done = False
+  if energy > 100:
+    energy = 100
+  if aliens_distance > -1:
+    print("GAME OVER")
+    print("they caught up to you")
+    done = False
+  if thirst > 2:
+    print("your getting thirsty")
+  if thirst > 6:
+    print("GAME OVER")
+    print("you got too thirsty")
+    done = False
+  if water_left < 1:
+    print("you ran out of water")  
+  if done is False:
+      print("")
+      print("stats:")
+      print("distance traveled:", miles_traveled, "kilometers")
+      print("water drank:", water_drank)
+      print("water left:", water_left)
+      print("aliens distance:", aliens_distance, "kilometers")
+      print("energy left:", energy)
+      print("thirst:", thirst)
+      print("turns survived:", turn)
+      print("temperature:", temperature, "degrees fahrenheit")
+      print("")
+      update_leaderboard(miles_traveled)
+      display_leaderboard()
+      done = False
+      break
+  choice = str(input("What will you do: "))
+  if choice == 'i' or choice == 'I':
+    print("")
+    print("W. drink water")
+    print("S. speed up")
+    print("L. LUDICROUS SPEED")
+    print("R. rest")
+    print("C. check user status")
+    print("Q. quit")
+    print("V. view leaderboard")
+    print("G. gather water")
+    print("F. cool down")
+    print("H. heat up")
+    print("")
+  if choice == 'Q' or choice == 'q':
+    end = str(input("Are you sure you want to quit? (y/n): "))
+    if end == 'y':
+      print("Thanks for playing!")
+      print("")
+      print("stats:")
+      print("distance traveled:", miles_traveled, "kilometers")
+      print("water drank:", water_drank)
+      print("water left:", water_left)
+      print("aliens distance:", aliens_distance, "kilometers")
+      print("energy left:", energy)
+      print("thirst:", thirst)
+      print("turns survived:", turn)
+      print("temperature:", temperature, "degrees fahrenheit")
+      print("")
+      print("")
+      update_leaderboard(miles_traveled)
+      display_leaderboard()
+      done = False
+      break
+    elif end == 'n':
+      print("")
+      print("OK")
+    else:
+      print("Invalid")
+    print("")
+  elif choice == 'F' or choice == 'f':
+    print("cooling down")
+    print("")
+    temperature -= 15
+  elif choice == 'H' or choice == 'h':
+    print("heating up")
+    print("")
+    temperature += 15
+  elif choice == 'C' or choice == 'c':
+    ahhh = random.randint(10,230)
+    aliens_distance += ahhh
+    temperature += 2
+    print("")
+    turn += 1
+    print("distance traveled:",miles_traveled, "kilometers")
+    print("water drank:", water_drank)
+    print("water left:", water_left)
+    print("aliens distance:", aliens_distance, "kilometers")
+    print("energy left:", energy)
+    print("thirst:", thirst)
+    print("temperature:", temperature, "degrees fahrenheit")
+    print("turns survived:" , turn)
+    print("")
+  elif choice == 'R' or choice =='r':
+    energy += 100 
+    turn += 1
+    temperature = 65 
+    print("you feel well rested")
+    distance = random.randint(20,40)
+    aliens_distance += distance
+    print("")
+  elif choice == 'S' or choice == 's':
+    speed = random.randint(10, 25)
+    turn += 1
+    temperature += 5
+    tired = random.randint(5,20)
+    aliens = random.randint(10,20)
+    miles_traveled += speed
+    energy -= tired
+    aliens_distance -= aliens
+    thirst += 1
+    print("you zoomin at:", speed)
+    print("")
+  elif choice == 'G' or choice == 'g':
+    turn +=1
+    temperature += 20
+    water_left =5
+    energy -=50
+    alien = random.randint(40,65)
+    aliens_distance -=alien
+    print("")
+    print("gathering water")
+  elif choice == 'W' or choice == 'w':
+    turn += 1
+    temperature -= 10
+    print("")
+    if water_left > 0:
+      print("you drank water...")
+      print("mmmm")
+      print("")
+      water_drank +=1
+      water_left -=1
+      aliens = random.randint(20,35)
+      aliens_distance += aliens
+      drink = random.randint(1,5)
+      thirst -= drink
+  elif choice == 'L' or choice == 'l':
+    turn += 1
+    temperature += 10
+    print("now entering LUDICROUS SPEED")
+    speed = random.randint(15, 30)
+    tired = random.randint(10,30)
+    aliens = random.randint(15,30)
+    miles_traveled += speed
+    energy -= tired
+    aliens_distance -= aliens
+    thirst += 2
+    print("you zoomin at:", speed)
+    print("")
+  elif choice == 'V' or choice == 'v':
+    print("")
+    display_leaderboard()
+  if miles_traveled in range(100, 130) and not has_printed:
+    has_printed = True
+    print("")
+    print("CONGRATULATIONS")
+    print("")
+    print("you escaped alive...")
+    print("this time")
+    complete= str(input("would you like to keep going? (y/n):"))
+    if complete == 'n':
+      print("")
+      print("bye bye")
+      print("")
+      print("stats:")
+      print("distance traveled:", miles_traveled, "kilometers")
+      print("water drank:", water_drank)
+      print("water left:", water_left)
+      print("aliens distance:", aliens_distance, "kilometers")
+      print("energy left:", energy)
+      print("thirst:", thirst)
+      print("turns survived:", turn)
+      print("temperature:", temperature, "degrees fahrenheit")
+      print("")
+      update_leaderboard(miles_traveled)
+      display_leaderboard()
+      done = False
+      break
+    else:
+      print("")
+      done = True
+  if miles_traveled in range(10000, 10050) and not has_printed:
+      has_printed = True
+      print("")
+      print("wow...")
+      print("")
+      print("i did not think this was possible...")
+      print("...")
+      print("but here we are")
+      print("")
+      print("congratulations")
+      print("")
+      print("you reached 10000 kilometers")
+      print("")
+      print("feel free to keep going or end here and see your stats")
+      print("")
+      long_end = str(input("would you like to keep going? (y/n):"))
+      if long_end := y:
+        print("")
+        print("see how much farther you can go")
+        print("")
+        done = True
+      elif long_end := n:
+        print("")
+        print("ok")
+        print("")
+        print("stats:")
+        print("distance traveled:", miles_traveled, "kilometers")
+        print("water drank:", water_drank)
+        print("water left:", water_left)
+        print("aliens distance:", aliens_distance, "kilometers")
+        print("energy left:", energy)
+        print("thirst:", thirst)
+        print("turns survived:", turn)
+        print("temperature:", temperature, "degrees fahrenheit")
+        print("")
+        update_leaderboard(miles_traveled)
+        display_leaderboard()
+        done = False
+        break
